@@ -1,2 +1,2 @@
 # devhub-backend
-OFFICEIT-57527
+Backend repository for devhub
