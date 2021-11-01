@@ -1,0 +1,10 @@
+{
+    "from_secret": false,
+    "name": "SEARCHDB",
+    "value": {
+        "databasedetails": {
+            "collection": "search_content",
+            "database": "devhub"
+        }
+    }
+}

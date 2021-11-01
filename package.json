@@ -1,0 +1,20 @@
+{
+  "name": "devhub",
+  "version": "0.1.0",
+  "repository": "github:10gen/devhub-api-service",
+  "scripts": {
+    "test": "jest"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm test"
+    }
+  },
+  "devDependencies": {
+    "husky": "^4.3.8",
+    "jest": "^27.3.1"
+  },
+  "dependencies": {
+    "@types/jest": "^27.0.2"
+  }
+}

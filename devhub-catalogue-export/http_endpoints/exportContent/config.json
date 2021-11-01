@@ -1,0 +1,6 @@
+{
+    "name": "exportContent",
+    "type": "http",
+    "config": {},
+    "version": 1
+}

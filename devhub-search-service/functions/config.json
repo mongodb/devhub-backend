@@ -1,0 +1,49 @@
+[
+    {
+        "name": "fetchCompositeSearchResults",
+        "private": false,
+        "run_as_system": true
+    },
+    {
+        "name": "fetchRstArticles",
+        "private": false,
+        "run_as_system": true
+    },
+    {
+        "name": "constructDevhubDomainUrl",
+        "private": false
+    },
+    {
+        "name": "fetchStrapiArticles",
+        "private": false,
+        "run_as_system": true
+    },
+    {
+        "name": "loadDevhubSearchContentIntoDB",
+        "private": false,
+        "run_as_system": true
+    },
+    {
+        "name": "fetchExactMatchesByContentType",
+        "private": false
+    },
+    {
+        "name": "exportContentCatalogueFromCompositeSearch",
+        "private": false,
+        "run_as_system": true
+    },
+    {
+        "name": "fetchAllArticles",
+        "private": false,
+        "run_as_system": true
+    },
+    {
+        "name": "fetchExactMatchesAcrossAllContent",
+        "private": false
+    },
+    {
+        "name": "fetchMediaContent",
+        "private": false,
+        "run_as_system": true
+    }
+]

@@ -1,0 +1,16 @@
+{
+    "id": "61256a8679c8aaa253a3b5f3",
+    "name": "searchContentReload",
+    "type": "SCHEDULED",
+    "config": {
+        "schedule": "*/15 * * * *"
+    },
+    "disabled": false,
+    "event_processors": {
+        "FUNCTION": {
+            "config": {
+                "function_name": "loadDevhubSearchContentIntoDB"
+            }
+        }
+    }
+}

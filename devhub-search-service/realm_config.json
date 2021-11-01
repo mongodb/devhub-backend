@@ -1,0 +1,7 @@
+{
+    "app_id": "devhub-search-service-fldiy",
+    "config_version": 20210101,
+    "name": "devhub-search-service",
+    "location": "US-VA",
+    "deployment_model": "GLOBAL"
+}
