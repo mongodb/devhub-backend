@@ -1,0 +1,55 @@
+# This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
+
+name: Devhub API
+
+on:
+  push:
+    branches: [ main ]
+    tags: v1*
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  run-test:
+    runs-on: macos-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Use Node.js 14.x
+      uses: actions/setup-node@v2
+      with:
+        node-version: 14.x
+        cache: 'npm'
+    - run: npm ci
+    - run: npm test
+  
+  deploy-staging:
+    runs-on: macos-latest
+    needs: run-test
+    if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}
+    strategy:
+      matrix:
+        dir: [devhub-api, devhub-catalogue-export, devhub-search-service]
+        include:
+        - dir: devhub-api
+          prod: devhub-api-ztlmp
+          staging: devhub-api-staging-oqtmn
+        - dir: devhub-catalogue-export
+          prod: devhub-catalogue-export-xijyd
+          staging: devhub-catalogue-export-staging-waduq
+        - dir: devhub-search-service
+          prod: devhub-search-service-fldiy
+          staging: devhub-search-service-staging-qrtnp
+    steps:
+    - uses: actions/checkout@v2
+    - name: "Install the Realm CLI & authenticate"
+      run: |
+          npm install -g mongodb-realm-cli
+          realm-cli login --api-key="${{ secrets.REALM_STAGING_API_PUBLIC_KEY }}" --private-api-key="${{ secrets.REALM_STAGING_API_PRIVATE_KEY }}"
+    
+    - name: "Push staging app"
+      run: |
+          cd ${{ matrix.dir }}
+          sed -i '' 's/"app_id": ".*"/"app_id": "${{ matrix.staging }}"/' realm_config.json
+          sed -i '' 's/"name": ".*"/"name": "${{ matrix.staging }}-staging"/' realm_config.json
+          realm-cli push --remote="${{ matrix.staging }}" -y
