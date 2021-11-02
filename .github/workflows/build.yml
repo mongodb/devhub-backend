@@ -47,7 +47,7 @@ jobs:
           npm install -g mongodb-realm-cli
     
     - name: "Authenticate and Push staging app"
-      if: ${{ github.ref == 'refs/heads/main' }} # Merging to the main branch
+      if: ${{ github.ref == 'refs/heads/main' }} # Merging to the main branch :)
       run: |
           realm-cli login --api-key="${{ secrets.REALM_STAGING_API_PUBLIC_KEY }}" --private-api-key="${{ secrets.REALM_STAGING_API_PRIVATE_KEY }}"
           cd ${{ matrix.dir }}
