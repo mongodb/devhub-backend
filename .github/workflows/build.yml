@@ -5,10 +5,10 @@ name: Devhub API
 
 on:
   push:
-    branches: [ main ]
+    branches: [ main, staging ]
     tags: v*
   pull_request:
-    branches: [ main ]
+    branches: [ staging ]
 
 jobs:
   run-test:
@@ -47,7 +47,7 @@ jobs:
           npm install -g mongodb-realm-cli
     
     - name: "Authenticate and Push staging app"
-      if: ${{ github.ref == 'refs/heads/main' }} # Merging to the main branch :)
+      if: ${{ github.ref == 'refs/heads/staging' }} # Merging to the staging branch
       run: |
           realm-cli login --api-key="${{ secrets.REALM_STAGING_API_PUBLIC_KEY }}" --private-api-key="${{ secrets.REALM_STAGING_API_PRIVATE_KEY }}"
           cd ${{ matrix.dir }}
@@ -56,7 +56,7 @@ jobs:
           realm-cli push --remote="${{ matrix.staging }}" -y
 
     - name: "Authenticate and Push prod app"
-      if: ${{ github.ref != 'refs/heads/main' }} # Creating a tag
+      if: ${{ github.ref == 'refs/heads/main' }} # Merging to the main branch
       run: |
           realm-cli login --api-key="${{ secrets.REALM_API_PUBLIC_KEY }}" --private-api-key="${{ secrets.REALM_API_PRIVATE_KEY }}"
           cd ${{ matrix.dir }}
