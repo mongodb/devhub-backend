@@ -1,0 +1,7 @@
+{
+    "app_id": "devhub-media-content-service-osjra",
+    "config_version": 20210101,
+    "name": "devhub-media-content-service",
+    "location": "US-VA",
+    "deployment_model": "LOCAL"
+}
