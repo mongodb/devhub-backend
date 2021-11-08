@@ -5,10 +5,10 @@ name: Devhub API
 
 on:
   push:
-    branches: [ main ]
+    branches: [ main, staging ]
     tags: v*
   pull_request:
-    branches: [ main ]
+    branches: [ staging ]
 
 jobs:
   run-test:
@@ -32,13 +32,13 @@ jobs:
         dir: [devhub-api, devhub-catalogue-export, devhub-search-service]
         include:
         - dir: devhub-api
-          prod: devhub-api-ztlmp
+          prod: devhub-api-nnbxy
           staging: devhub-api-staging-oqtmn
         - dir: devhub-catalogue-export
-          prod: devhub-catalogue-export-xijyd
+          prod: devhub-catalogue-export-bafwl
           staging: devhub-catalogue-export-staging-waduq
         - dir: devhub-search-service
-          prod: devhub-search-service-fldiy
+          prod: devhub-search-service-elepi
           staging: devhub-search-service-staging-qrtnp
     steps:
     - uses: actions/checkout@v2
@@ -47,7 +47,7 @@ jobs:
           npm install -g mongodb-realm-cli
     
     - name: "Authenticate and Push staging app"
-      if: ${{ github.ref == 'refs/heads/main' }} # Merging to the main branch :)
+      if: ${{ github.ref == 'refs/heads/staging' }} # Merging to the staging branch
       run: |
           realm-cli login --api-key="${{ secrets.REALM_STAGING_API_PUBLIC_KEY }}" --private-api-key="${{ secrets.REALM_STAGING_API_PRIVATE_KEY }}"
           cd ${{ matrix.dir }}
@@ -56,8 +56,9 @@ jobs:
           realm-cli push --remote="${{ matrix.staging }}" -y
 
     - name: "Authenticate and Push prod app"
-      if: ${{ github.ref != 'refs/heads/main' }} # Creating a tag
+      if: ${{ github.ref == 'refs/heads/main' }} # Merging to the main branch
       run: |
-          realm-cli login --api-key="${{ secrets.REALM_API_PUBLIC_KEY }}" --private-api-key="${{ secrets.REALM_API_PRIVATE_KEY }}"
+          realm-cli login --api-key="${{ secrets.REALM_PROD_API_PUBLIC_KEY }}" --private-api-key="${{ secrets.REALM_PROD_API_PRIVATE_KEY }}"
           cd ${{ matrix.dir }}
+          sed -i '' 's/"app_id": ".*"/"app_id": "${{ matrix.prod }}"/' realm_config.json
           realm-cli push --remote="${{ matrix.prod }}" -y
