@@ -40,6 +40,9 @@ jobs:
         - dir: devhub-search-service
           prod: devhub-search-service-elepi
           staging: devhub-search-service-staging-qrtnp
+        - dir: devhub-media-content-service
+          prod: devhub-media-content-service-nptes
+          staging: devhub-media-content-service-qrtnp
     steps:
     - uses: actions/checkout@v2
     - name: "Install the Realm CLI"
