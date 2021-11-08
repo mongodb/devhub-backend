@@ -29,7 +29,7 @@ jobs:
     if: ${{ github.event_name == 'push' }}
     strategy:
       matrix:
-        dir: [devhub-api, devhub-catalogue-export, devhub-search-service]
+        dir: [devhub-api, devhub-catalogue-export, devhub-search-service, devhub-media-content-service]
         include:
         - dir: devhub-api
           prod: devhub-api-nnbxy
