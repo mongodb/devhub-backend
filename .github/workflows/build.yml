@@ -12,7 +12,7 @@ on:
 
 jobs:
   run-test:
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
     - name: Use Node.js 14.x
@@ -41,7 +41,7 @@ jobs:
         #  prod: devhub-search-service-elepi
         #  staging: devhub-search-service-staging-qrtnp
         - dir: devhub-media-content-service
-          #prod: devhub-media-content-service-nptes
+          prod: devhub-media-content-service-dpbne
           staging: devhub-media-content-service-glhzl
     steps:
     - uses: actions/checkout@v2
