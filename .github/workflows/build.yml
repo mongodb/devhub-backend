@@ -29,17 +29,20 @@ jobs:
     if: ${{ github.event_name == 'push' }}
     strategy:
       matrix:
-        dir: [devhub-api, devhub-catalogue-export, devhub-search-service]
+        dir: [devhub-media-content-service]
         include:
-        - dir: devhub-api
-          prod: devhub-api-nnbxy
-          staging: devhub-api-staging-oqtmn
-        - dir: devhub-catalogue-export
-          prod: devhub-catalogue-export-bafwl
-          staging: devhub-catalogue-export-staging-waduq
-        - dir: devhub-search-service
-          prod: devhub-search-service-elepi
-          staging: devhub-search-service-staging-qrtnp
+        #- dir: devhub-api
+        #  prod: devhub-api-nnbxy
+        #  staging: devhub-api-staging-oqtmn
+        #- dir: devhub-catalogue-export
+        #  prod: devhub-catalogue-export-bafwl
+        #  staging: devhub-catalogue-export-staging-waduq
+        #- dir: devhub-search-service
+        #  prod: devhub-search-service-elepi
+        #  staging: devhub-search-service-staging-qrtnp
+        - dir: devhub-media-content-service
+          prod: devhub-media-content-service-dpbne
+          staging: devhub-media-content-service-glhzl
     steps:
     - uses: actions/checkout@v2
     - name: "Install the Realm CLI"
@@ -52,7 +55,6 @@ jobs:
           realm-cli login --api-key="${{ secrets.REALM_STAGING_API_PUBLIC_KEY }}" --private-api-key="${{ secrets.REALM_STAGING_API_PRIVATE_KEY }}"
           cd ${{ matrix.dir }}
           sed -i '' 's/"app_id": ".*"/"app_id": "${{ matrix.staging }}"/' realm_config.json
-          sed -i '' 's/"name": ".*"/"name": "${{ matrix.dir }}-staging"/' realm_config.json
           realm-cli push --remote="${{ matrix.staging }}" -y
 
     - name: "Authenticate and Push prod app"
